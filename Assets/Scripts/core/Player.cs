@@ -14,10 +14,13 @@ public class Player : MonoBehaviour
     private Rigidbody2D rb;
     private Vector2 moveInput;
     private bool isGrounded;
+    private GameObject res;
 
     private void Awake()
     {
         rb = GetComponent<Rigidbody2D>();
+        res = GameObject.Find("respawnPoint");
+        this.gameObject.transform.position = res.transform.position;
     }
 
     private void Update()
@@ -41,6 +44,11 @@ public class Player : MonoBehaviour
         if (Input.GetKeyDown(KeyCode.Space) && isGrounded)
         {
             rb.AddForce(Vector2.up * jumpForce, ForceMode2D.Impulse);
+        }
+        if (Input.GetKeyDown(KeyCode.R))
+        {
+            this.gameObject.transform.position = res.transform.position;
+            rb.linearVelocity = Vector2.zero;
         }
 
         /*// 朝向翻轉
